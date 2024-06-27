@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Iterable
 
-from base_state import BaseState
+from .base_state import BaseState
 
 class BaseTap(ABC):
     def __init__(self, state: BaseState):

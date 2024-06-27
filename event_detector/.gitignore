@@ -1,0 +1,3 @@
+.state/
+.pytest_cache
+.python-version

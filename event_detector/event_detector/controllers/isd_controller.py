@@ -1,10 +1,11 @@
-from interfaces import BaseTap
+from interfaces import BaseState
+from entities import FTPTap
 
 class ISDController():
     bigquery_tables = {}
 
-    def __init__(self, tap: BaseTap):
-        self.tap: BaseTap = tap
+    def __init__(self, state: BaseState):
+        self.tap = FTPTap("ftp.ncdc.noaa.gov", state=state)
     
     def get_and_dispatch_changed_events(self) -> None:
         changed_files = self.tap.get_changed_files()
