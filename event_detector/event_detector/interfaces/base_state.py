@@ -9,10 +9,16 @@ class BaseState(ABC):
     def retrive_state(self) -> dict:
         pass
 
+    @abstractmethod   
     def get_last_modified_datetime(self, key: str) -> datetime:
         pass
     
-    def set_last_modified_datetime(self, key: str, dt: datetime):
+    @abstractmethod
+    def set_last_modified_datetime(self, key: str, dt: datetime) -> None:
+        pass
+    
+    @abstractmethod
+    def write_state(self) -> None:
         pass
     
     @property

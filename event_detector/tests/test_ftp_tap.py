@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch, Mock
 
 from event_detector.entities import FTPTap, LocalState

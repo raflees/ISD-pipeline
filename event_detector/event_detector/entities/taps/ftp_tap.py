@@ -36,7 +36,6 @@ class FTPTap(BaseTap):
     def get_changed_files(self, pattern: str) -> Iterable[str]:
         for file, facts in self.get_file_list():
             match = re.findall(pattern, file)
-            print(file, self._is_file_modified(file, facts))
             if len(match) > 0 and self._is_file_modified(file, facts):
                 self.download_file()
                 yield file
@@ -44,7 +43,6 @@ class FTPTap(BaseTap):
     def _is_file_modified(self, file: str, file_facts: dict) -> bool:
         last_modified_datetime = self.state.get_last_modified_datetime(file)
         file_modified_datetime = datetime.strptime(file_facts['modify'], '%Y%m%d%H%M%S')
-        print(file, last_modified_datetime, file_modified_datetime)
         if last_modified_datetime is None or file_modified_datetime is None:
             return True
         if last_modified_datetime < file_modified_datetime:

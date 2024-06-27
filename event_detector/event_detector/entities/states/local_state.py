@@ -1,5 +1,6 @@
 from datetime import datetime
 import json
+import os
 import os.path
 
 from interfaces import BaseState
@@ -8,7 +9,7 @@ class LocalState(BaseState):
     def __init__(self, state_path="./state/", state_format="json"):
         self.state_path = state_path
         self.state_format = state_format
-        self.datetime_format = "%Y-%m-%dT%H:%M:%S"
+        self.datetime_format = "%Y-%m-%d %H:%M:%S"
         super().__init__()
     
     def get_last_modified_datetime(self, key: str) -> datetime:
@@ -34,3 +35,12 @@ class LocalState(BaseState):
         else:
             with open(self.state_path) as f:
                 return json.load(f)
+    
+    def _create_state_folder(self):
+        folder = os.path.dirname(self.state_path)
+        os.makedirs(folder, exist_ok=True)
+
+    def write_state(self):
+        self._create_state_folder()
+        with open(self.state_path, 'w') as f:
+            json.dump(self.state, f)
