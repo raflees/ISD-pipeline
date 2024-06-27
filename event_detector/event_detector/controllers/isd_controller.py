@@ -12,3 +12,6 @@ class ISDController():
         for changed_file in changed_files:
             target_table = ISDController.bigquery_tables[changed_file]
             self.trigger_etl_pipeline(target_file=changed_files, target_table=target_table)
+    
+    def trigger_etl_pipeline(self):
+        print("Trigger ETL")

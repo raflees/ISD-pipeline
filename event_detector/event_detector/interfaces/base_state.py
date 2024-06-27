@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from datetime import datetime
 
 class BaseState(ABC):
     def __init__(self):
@@ -6,6 +7,12 @@ class BaseState(ABC):
     
     @abstractmethod
     def retrive_state(self) -> dict:
+        pass
+
+    def get_last_modified_datetime(self, key: str) -> datetime:
+        pass
+    
+    def set_last_modified_datetime(self, key: str, dt: datetime):
         pass
     
     @property
