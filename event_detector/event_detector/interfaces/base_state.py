@@ -16,6 +16,9 @@ class BaseState(ABC):
     @abstractmethod
     def set_last_modified_datetime(self, key: str, dt: datetime) -> None:
         pass
+
+    def update_state(self) -> None:
+        self._state = self.retrive_state()
     
     @abstractmethod
     def write_state(self) -> None:
@@ -24,5 +27,5 @@ class BaseState(ABC):
     @property
     def state(self) -> dict:
         if self._state == {}:
-            self._state = self.retrive_state()
+            self.update_state()
         return self._state

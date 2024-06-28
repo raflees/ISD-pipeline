@@ -28,7 +28,7 @@ class HTTPBaseTap(BaseTap, ABC):
     @staticmethod
     def _get_soup_from_url(url: str) -> BeautifulSoup:
         response = requests.get(url)
-        return BeautifulSoup(response.text, features="lxml")
+        return BeautifulSoup(response.text, "html.parser")
     
     @staticmethod
     def _get_join_url(url: str, ref: str):
