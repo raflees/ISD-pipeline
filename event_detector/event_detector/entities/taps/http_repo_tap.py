@@ -16,11 +16,14 @@ class HTTPRepoTap(HTTPBaseTap):
         
     def get_target_files(self) -> Iterable[HTTPFile]:
         file_list = []
+        self.searched_urls = set()
         self._get_target_files(self.base_url, file_list)
         return file_list
     
     def _get_target_files(self, url: str, file_list: list) -> None:
+        self.searched_urls.add(url)
         soup = self._get_soup_from_url(url)
+        print(f"Fetch soup from {url}")
         table_rows = soup.find_all("tr")
 
         for tr in table_rows:
@@ -32,11 +35,12 @@ class HTTPRepoTap(HTTPBaseTap):
             ]
 
             table_name_data = table_row_contents[self.file_name_col_num].find("a")
-            if table_name_data == -1: # Not an anchor
+            if table_name_data == -1 or table_name_data is None: # Not an anchor
                 continue
             
             link = table_name_data.attrs.get("href", None)
             if link is None or not self._is_url_valid_for_search(url, link):
+                print(f"{self._get_join_url(url, link)} is not a valid url for search")
                 continue
             
             next_url = self._get_join_url(url, link)
@@ -48,6 +52,7 @@ class HTTPRepoTap(HTTPBaseTap):
                     url=next_url,
                     last_modified=table_row_contents[self.modified_col_num].string.strip(),
                 )
+                print("Adding", file)
                 file_list.append(file)
             
 
@@ -56,4 +61,5 @@ class HTTPRepoTap(HTTPBaseTap):
         for file in all_downstream_files:
             last_file_modified_datetime = self.state.get_last_modified_datetime(file.url)
             if last_file_modified_datetime is None or file.last_modified > last_file_modified_datetime:
+                self.state.set_last_modified_datetime(file.url, file.last_modified)
                 yield file

@@ -10,6 +10,7 @@ from interfaces import BaseTap, BaseState
 class HTTPBaseTap(BaseTap, ABC):
     def __init__(self, base_url: str, pattern: str, state: BaseState):
         super().__init__(pattern, state)
+        self.searched_urls: set = set()
         self.base_url = base_url
     
     @abstractmethod
@@ -34,8 +35,18 @@ class HTTPBaseTap(BaseTap, ABC):
     def _is_url_valid_for_search(self, base_url: str, ref: str):
         url = self._get_join_url(base_url, ref)
 
-        # URL redirects or goes upstream
-        if not url.startswith(base_url): return False
+        print("Check", url)
+        # URL redirects
+        if not self.base_url in url:
+            print("Redirects")
+            return False
         # URL adds parameter to the page
-        if url.startswith("?"): return False
+        if ref.startswith("?"):
+            print("Adds parameter")
+            return False
+        # URL already searched
+        if url in self.searched_urls:
+            print("Already searched")
+            return False
+        print("Valid")
         return True

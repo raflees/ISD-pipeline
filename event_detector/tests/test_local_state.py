@@ -25,8 +25,7 @@ def test_set_and_write_state(tmp_path):
     file1_new_modified_datetime = datetime(2024, 12, 31, 12, 0, 0)
     file2_new_modified_datetime = datetime(2025, 6, 30, 12, 0, 0)
     tmp_state_path = f"{tmp_path}/state/state.json"
-
-    local_state.update_state()
+    
     local_state.state_path = tmp_state_path
     local_state.set_last_modified_datetime("file1", file1_new_modified_datetime)
     local_state.set_last_modified_datetime("file2", file2_new_modified_datetime)
