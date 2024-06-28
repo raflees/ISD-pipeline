@@ -12,3 +12,5 @@ class BaseTap(ABC):
     def get_changed_files() -> Iterable[str]:
         pass
     
+    def write_state(self):
+        self.state.write_state()

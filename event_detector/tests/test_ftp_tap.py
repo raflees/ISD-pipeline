@@ -13,7 +13,6 @@ def test_file_is_modified(monkeypatch):
 
     monkeypatch.setattr(FTPTap, 'get_file_list', patch_get_file_list)
     monkeypatch.setattr(FTPTap, 'connect', lambda self: None)
-    monkeypatch.setattr(FTPTap, 'download_file', lambda *args, **kwargs: None)
 
     tap = FTPTap("dummy_host", state)
     changed_files = tap.get_changed_files("file")

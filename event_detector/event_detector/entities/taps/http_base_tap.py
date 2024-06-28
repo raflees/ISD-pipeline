@@ -21,9 +21,6 @@ class HTTPBaseTap(BaseTap, ABC):
     
     def get_changed_files() -> Iterable[str]:
         super().get_changed_files()
-
-    def write_state(self):
-        super().write_state()
     
     @staticmethod
     def _get_soup_from_url(url: str) -> BeautifulSoup:
