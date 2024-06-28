@@ -6,7 +6,7 @@ import os.path
 from interfaces import BaseState
 
 class LocalState(BaseState):
-    def __init__(self, state_path="./state/", state_format="json"):
+    def __init__(self, state_path="./state/state.json", state_format="json"):
         self.state_path = state_path
         self.state_format = state_format
         self.datetime_format = "%Y-%m-%d %H:%M:%S"
