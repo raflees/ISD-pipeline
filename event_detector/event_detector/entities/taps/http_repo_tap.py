@@ -1,7 +1,5 @@
-from bs4 import BeautifulSoup
 import re
-from typing import Iterable, List
-from urllib.parse import urljoin
+from typing import Iterable
 
 from interfaces import BaseState
 from entities.files.http_file import HTTPFile
@@ -16,7 +14,7 @@ class HTTPRepoTap(HTTPBaseTap):
         self.file_name_col_num = HTTPRepoTap.DEFAULT_FILE_NAME_COL_NUM
         self.modified_col_num = HTTPRepoTap.DEFAULT_MODIFIED_COL_NUM
         
-    def get_target_files(self) -> Iterable[str]:
+    def get_target_files(self) -> Iterable[HTTPFile]:
         file_list = []
         self._get_target_files(self.base_url, file_list)
         return file_list
@@ -45,7 +43,6 @@ class HTTPRepoTap(HTTPBaseTap):
             if next_url.endswith("/"): # New URL
                 self._get_target_files(next_url, file_list)
             elif re.search(self.pattern, next_url) is not None:  # Match
-                print(table_row_contents[self.modified_col_num].string.strip())
                 file = HTTPFile(
                     name=table_name_data.string.strip(),
                     url=next_url,
@@ -54,8 +51,9 @@ class HTTPRepoTap(HTTPBaseTap):
                 file_list.append(file)
             
 
-    def get_changed_files() -> Iterable[str]:
-        super().get_changed_files()
-
-    def write_state(self):
-        super().write_state()
+    def get_changed_files(self) -> Iterable[HTTPFile]:
+        all_downstream_files = self.get_target_files()
+        for file in all_downstream_files:
+            last_file_modified_datetime = self.state.get_last_modified_datetime(file.url)
+            if last_file_modified_datetime is None or file.last_modified > last_file_modified_datetime:
+                yield file
