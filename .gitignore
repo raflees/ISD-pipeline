@@ -52,4 +52,4 @@ coverage.xml
 docs/_build/
 
 # Temp files
-event_detector/.state/
+**/.state/**
