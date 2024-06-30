@@ -6,7 +6,7 @@ import os.path
 from interfaces import BaseState
 
 class LocalState(BaseState):
-    def __init__(self, state_path="./state/", state_format="json"):
+    def __init__(self, state_path="event_detector/.state/state.json", state_format="json"):
         self.state_path = state_path
         self.state_format = state_format
         self.datetime_format = "%Y-%m-%d %H:%M:%S"
@@ -23,13 +23,13 @@ class LocalState(BaseState):
             self.state[key] = {}
         self.state[key]["last_modified"] = dt.strftime(self.datetime_format)
     
-    def retrive_state(self):
+    def _retrieve_state(self):
         if self.state_format == "json":
             return self._retrieve_json_state()
         else:
             raise NotImplemented(f"Retrieval of state in a {self.state_format} is not implemented.")
     
-    def _retrieve_json_state(self):
+    def _retrieve_json_state(self) -> dict:
         if not os.path.exists(self.state_path):
             return {}
         else:
@@ -37,6 +37,7 @@ class LocalState(BaseState):
                 return json.load(f)
     
     def _create_state_folder(self):
+        print("Making directory", self.state_path)
         folder = os.path.dirname(self.state_path)
         os.makedirs(folder, exist_ok=True)
 

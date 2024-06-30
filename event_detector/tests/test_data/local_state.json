@@ -1,5 +1,8 @@
 {
     "file1": {
         "last_modified": "2024-05-01 20:14:00"
+    },
+    "http://www.test_url.com/2020/2020.gz": {
+        "last_modified": "2018-08-26 02:55:00"
     }
 }

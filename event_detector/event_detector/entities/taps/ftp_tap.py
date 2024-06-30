@@ -25,10 +25,6 @@ class FTPTap(BaseTap):
         else:
             self.ftp_server.login()
         self.ftp_server.cwd(self.dirpath)
-
-    def download_file(self, filename: str) -> None:
-        with open(f'/downloaded/{filename}', 'wb') as f:
-           self.ftp_server.retrbinary("RETR " + filename, f.write)
     
     def get_file_list(self) -> Iterable[Tuple[str, dict]]:
         return self.ftp_server.mlsd()
@@ -37,7 +33,6 @@ class FTPTap(BaseTap):
         for file, facts in self.get_file_list():
             match = re.findall(pattern, file)
             if len(match) > 0 and self._is_file_modified(file, facts):
-                self.download_file()
                 yield file
     
     def _is_file_modified(self, file: str, file_facts: dict) -> bool:

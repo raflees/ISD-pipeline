@@ -3,10 +3,10 @@ from datetime import datetime
 
 class BaseState(ABC):
     def __init__(self):
-        self._state: dict = {}
+        self.state: dict = self._retrieve_state()
     
     @abstractmethod
-    def retrive_state(self) -> dict:
+    def _retrieve_state(self) -> dict:
         pass
 
     @abstractmethod   
@@ -20,9 +20,3 @@ class BaseState(ABC):
     @abstractmethod
     def write_state(self) -> None:
         pass
-    
-    @property
-    def state(self) -> dict:
-        if self._state == {}:
-            self._state = self.retrive_state()
-        return self._state
