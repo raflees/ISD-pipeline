@@ -3,7 +3,7 @@ import json
 
 from google.cloud import storage
 
-from event_detector.interfaces import BaseState
+from interfaces import BaseState
 
 class CloudStorageState(BaseState):
     def __init__(self, project_id: str, bucket: str, blob_path: str):
@@ -14,7 +14,7 @@ class CloudStorageState(BaseState):
 
     @staticmethod
     def _get_client(project_id: str) -> storage.Client:
-        return storage.Client(project_id=project_id)
+        return storage.Client(project_id)
     
     def _get_blob(self, bucket: str, blob_path: str) -> storage.Blob:
         bucket = self._client.bucket(bucket)

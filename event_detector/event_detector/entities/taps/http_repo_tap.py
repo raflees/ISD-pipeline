@@ -23,7 +23,6 @@ class HTTPRepoTap(HTTPBaseTap):
     def _get_target_files(self, url: str, file_list: list) -> None:
         self.searched_urls.add(url)
         soup = self._get_soup_from_url(url)
-        print(f"Fetch soup from {url}")
         table_rows = soup.find_all("tr")
 
         for tr in table_rows:
