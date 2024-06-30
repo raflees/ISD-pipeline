@@ -6,23 +6,11 @@ import os.path
 from interfaces import BaseState
 
 class LocalState(BaseState):
-    def __init__(self, state_path="event_detector/.state/state.json", state_format="json"):
-        self.state_path = state_path
-        self.state_format = state_format
-        self.datetime_format = "%Y-%m-%d %H:%M:%S"
+    def __init__(self, state_path="event_detector/.state/state.json"):
         super().__init__()
-    
-    def get_last_modified_datetime(self, key: str) -> datetime:
-        raw_last_modified = self.state.get(key, {}).get("last_modified", None)
-        if raw_last_modified is not None:
-            return datetime.strptime(raw_last_modified, self.datetime_format)
-        return None
-
-    def set_last_modified_datetime(self, key: str, dt: datetime):
-        if self.state.get(key, None) is None:
-            self.state[key] = {}
-        self.state[key]["last_modified"] = dt.strftime(self.datetime_format)
-    
+        self.state_path = state_path
+        self.state = self._retrieve_state()
+        
     def _retrieve_state(self):
         if self.state_format == "json":
             return self._retrieve_json_state()
