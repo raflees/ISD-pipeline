@@ -1,5 +1,5 @@
-from .controllers import ISDController
-from .entities import CloudStorageState, PubSubDispatcher, LocalState
+from event_detector.controllers import ISDController
+from event_detector.entities import CloudStorageState, PubSubDispatcher, LocalState
 
 def run(pattern="A(.*).gz"):
     project_id = 'cellular-retina-427804-i7'
