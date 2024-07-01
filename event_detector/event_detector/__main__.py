@@ -9,7 +9,7 @@ if __name__ == '__main__':
     state = CloudStorageState(project_id, 'isd-pipeline-state', 'state.json')
 
     controller = ISDController(
-        pattern=pattern
+        pattern=pattern,
         state=state,
         dispatcher=dispatcher)
     controller.get_and_dispatch_changed_events()
