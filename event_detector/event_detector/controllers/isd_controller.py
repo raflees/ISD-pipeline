@@ -1,5 +1,5 @@
-from interfaces import BaseDispatcher, BaseState
-from entities import HTTPRepoTap, HTTPFile
+from event_detector.interfaces import BaseDispatcher, BaseState
+from event_detector.entities import HTTPRepoTap, HTTPFile
 
 class ISDController():
     def __init__(self, pattern, state: BaseState, dispatcher: BaseDispatcher):

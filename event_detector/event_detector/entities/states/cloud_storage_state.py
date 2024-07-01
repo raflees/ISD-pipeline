@@ -3,7 +3,7 @@ import json
 
 from google.cloud import storage
 
-from interfaces import BaseState
+from event_detector.interfaces import BaseState
 
 class CloudStorageState(BaseState):
     def __init__(self, project_id: str, bucket: str, blob_path: str):

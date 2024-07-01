@@ -1,10 +1,10 @@
-# import functions_framework
 from flask import Request
+import functions_framework
 import json
 
 from event_detector import run
 
-# @functions_framework.http
+@functions_framework.http
 def event_detector(request):
     request_json = request.get_json(silent=True)
     request_args = request.args
@@ -17,8 +17,9 @@ def event_detector(request):
         pattern = "A(.*).gz"
 
     run(pattern)
+    return 'OK'
 
 if __name__ == "__main__":
-    request = Request()
+    request = Request({})
     request.data = json.dumps({"pattern": "A(.*).gz"})
     event_detector(request)
