@@ -23,7 +23,6 @@ class HTTPRepoTap(HTTPBaseTap):
     def _get_target_files(self, url: str, file_list: list) -> None:
         self.searched_urls.add(url)
         soup = self._get_soup_from_url(url)
-        print(f"Fetch soup from {url}")
         table_rows = soup.find_all("tr")
 
         for tr in table_rows:
@@ -40,7 +39,6 @@ class HTTPRepoTap(HTTPBaseTap):
             
             link = table_name_data.attrs.get("href", None)
             if link is None or not self._is_url_valid_for_search(url, link):
-                print(f"{self._get_join_url(url, link)} is not a valid url for search")
                 continue
             
             next_url = self._get_join_url(url, link)
@@ -52,14 +50,13 @@ class HTTPRepoTap(HTTPBaseTap):
                     url=next_url,
                     last_modified=table_row_contents[self.modified_col_num].string.strip(),
                 )
-                print("Adding", file)
                 file_list.append(file)
             
-
     def get_changed_files(self) -> Iterable[HTTPFile]:
         all_downstream_files = self.get_target_files()
         for file in all_downstream_files:
             last_file_modified_datetime = self.state.get_last_modified_datetime(file.url)
             if last_file_modified_datetime is None or file.last_modified > last_file_modified_datetime:
+                print(f"Identified modified file {file.url}")
                 self.state.set_last_modified_datetime(file.url, file.last_modified)
                 yield file

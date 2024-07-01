@@ -35,18 +35,13 @@ class HTTPBaseTap(BaseTap, ABC):
     def _is_url_valid_for_search(self, base_url: str, ref: str):
         url = self._get_join_url(base_url, ref)
 
-        print("Check", url)
         # URL redirects
         if not self.base_url in url:
-            print("Redirects")
             return False
         # URL adds parameter to the page
         if ref.startswith("?"):
-            print("Adds parameter")
             return False
         # URL already searched
         if url in self.searched_urls:
-            print("Already searched")
             return False
-        print("Valid")
         return True
