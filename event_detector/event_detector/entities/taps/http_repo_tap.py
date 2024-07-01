@@ -51,14 +51,13 @@ class HTTPRepoTap(HTTPBaseTap):
                     url=next_url,
                     last_modified=table_row_contents[self.modified_col_num].string.strip(),
                 )
-                print("Adding", file)
                 file_list.append(file)
             
-
     def get_changed_files(self) -> Iterable[HTTPFile]:
         all_downstream_files = self.get_target_files()
         for file in all_downstream_files:
             last_file_modified_datetime = self.state.get_last_modified_datetime(file.url)
             if last_file_modified_datetime is None or file.last_modified > last_file_modified_datetime:
+                print(f"Identified modified file {file.url}")
                 self.state.set_last_modified_datetime(file.url, file.last_modified)
                 yield file
