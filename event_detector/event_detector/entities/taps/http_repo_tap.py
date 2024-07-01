@@ -39,7 +39,6 @@ class HTTPRepoTap(HTTPBaseTap):
             
             link = table_name_data.attrs.get("href", None)
             if link is None or not self._is_url_valid_for_search(url, link):
-                print(f"{self._get_join_url(url, link)} is not a valid url for search")
                 continue
             
             next_url = self._get_join_url(url, link)
