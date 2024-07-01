@@ -55,5 +55,5 @@ docs/_build/
 *.python-version
 
 # Temp files
-.event_detector.zip
+event_detector.zip
 **/.state/**
