@@ -51,5 +51,9 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Pyenv
+*.python-version
+
 # Temp files
+event_detector.zip
 **/.state/**

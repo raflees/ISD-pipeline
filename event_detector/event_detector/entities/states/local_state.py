@@ -3,7 +3,7 @@ import json
 import os
 import os.path
 
-from interfaces import BaseState
+from event_detector.interfaces import BaseState
 
 class LocalState(BaseState):
     def __init__(self, state_path="event_detector/.state/state.json"):

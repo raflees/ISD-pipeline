@@ -3,8 +3,8 @@ from ftplib import FTP
 import re
 from typing import Iterable, Tuple
 
-from interfaces.base_tap import BaseTap
-from interfaces.base_state import BaseState
+from event_detector.interfaces.base_tap import BaseTap
+from event_detector.interfaces.base_state import BaseState
 
 class FTPTap(BaseTap):
     def __init__(self, host: str, state: BaseState, user: str = None, password: str = None, dirpath="/"):

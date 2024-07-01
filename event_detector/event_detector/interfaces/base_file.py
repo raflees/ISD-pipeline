@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Union
 
-from helper_methods import parse_datetime
+from event_detector.helper_methods import parse_datetime
 
 class BaseFile(ABC):
     def __init__(self, name: str, last_modified: Union[datetime, str]):

@@ -4,7 +4,7 @@ from typing import Iterable
 
 from google import pubsub_v1
 
-from interfaces import BaseDispatcher
+from event_detector.interfaces import BaseDispatcher
 
 class PubSubDispatcher(BaseDispatcher):
     def __init__(self, project_id: str, topic: str, chuck_size=1000):

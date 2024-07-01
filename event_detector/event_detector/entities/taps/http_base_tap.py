@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
-from interfaces import BaseTap, BaseState
+from event_detector.interfaces import BaseTap, BaseState
 
 class HTTPBaseTap(BaseTap, ABC):
     def __init__(self, base_url: str, pattern: str, state: BaseState):

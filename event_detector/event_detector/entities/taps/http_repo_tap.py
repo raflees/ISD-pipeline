@@ -1,9 +1,9 @@
 import re
 from typing import Iterable
 
-from interfaces import BaseState
-from entities.files.http_file import HTTPFile
-from entities.taps.http_base_tap import HTTPBaseTap
+from event_detector.interfaces import BaseState
+from event_detector.entities.files.http_file import HTTPFile
+from event_detector.entities.taps.http_base_tap import HTTPBaseTap
 
 class HTTPRepoTap(HTTPBaseTap):
     DEFAULT_FILE_NAME_COL_NUM = 0

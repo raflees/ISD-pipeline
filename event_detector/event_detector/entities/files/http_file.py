@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Union
 
-from interfaces import BaseFile
+from event_detector.interfaces import BaseFile
 
 class HTTPFile(BaseFile):
     def __init__(self, name: str, url: str, last_modified: Union[str, datetime]):
