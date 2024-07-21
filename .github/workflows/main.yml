@@ -27,5 +27,5 @@ jobs:
         run: |
           source .venv/bin/activate
           pytest -vv
-      # - name: Check MyPy Event Detector
-      #   run: mypy -p event_detector
+      - name: Check MyPy Event Detector
+        run: mypy -p event_detector
