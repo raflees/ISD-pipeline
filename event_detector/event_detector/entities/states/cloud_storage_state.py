@@ -1,7 +1,7 @@
 from datetime import datetime
 import json
 
-from google.cloud import storage
+from google.cloud import storage  # type: ignore
 
 from event_detector.interfaces import BaseState
 
@@ -17,8 +17,8 @@ class CloudStorageState(BaseState):
         return storage.Client(project_id)
     
     def _get_blob(self, bucket: str, blob_path: str) -> storage.Blob:
-        bucket = self._client.bucket(bucket)
-        return bucket.blob(blob_path)
+        bucket_obj = self._client.bucket(bucket)
+        return bucket_obj.blob(blob_path)
     
     def _retrieve_state(self):
         raw_state = self.state_blob.download_as_bytes().decode("utf-8")

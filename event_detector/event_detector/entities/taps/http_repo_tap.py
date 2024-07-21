@@ -1,5 +1,5 @@
 import re
-from typing import Iterable
+from typing import Iterable, List
 
 from event_detector.interfaces import BaseState
 from event_detector.entities.files.http_file import HTTPFile
@@ -15,7 +15,7 @@ class HTTPRepoTap(HTTPBaseTap):
         self.modified_col_num = HTTPRepoTap.DEFAULT_MODIFIED_COL_NUM
         
     def get_target_files(self) -> Iterable[HTTPFile]:
-        file_list = []
+        file_list: List[HTTPFile] = []
         self.searched_urls = set()
         self._get_target_files(self.base_url, file_list)
         return file_list
@@ -56,7 +56,11 @@ class HTTPRepoTap(HTTPBaseTap):
         all_downstream_files = self.get_target_files()
         for file in all_downstream_files:
             last_file_modified_datetime = self.state.get_last_modified_datetime(file.url)
-            if last_file_modified_datetime is None or file.last_modified > last_file_modified_datetime:
+            if (last_file_modified_datetime is None
+                or file.last_modified is None
+                or file.last_modified > last_file_modified_datetime
+            ):
                 print(f"Identified modified file {file.url}")
-                self.state.set_last_modified_datetime(file.url, file.last_modified)
+                if file.last_modified is not None:
+                    self.state.set_last_modified_datetime(file.url, file.last_modified)
                 yield file

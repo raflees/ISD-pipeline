@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from typing import Optional
+
 DATETIME_FORMATS = [
     "%Y%m%d%H%M%S",
     "%Y-%m-%d %H:%M:%S",
@@ -8,7 +10,7 @@ DATETIME_FORMATS = [
     "%Y-%m-%dT%H:%M",
 ]
 
-def parse_datetime(raw_datetime: str, raise_exception=False):
+def parse_datetime(raw_datetime: str, raise_exception=False) -> Optional[datetime]:
     raw_datetime = raw_datetime.strip()
     parsed_datetime = None
     for fmt in DATETIME_FORMATS:

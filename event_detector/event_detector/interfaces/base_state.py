@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 
+from typing import Optional
+
 class BaseState(ABC):
-    def __init__(self, state_format="json", datetime_format="%Y-%m-%d %H:%M:%S"):
+    def __init__(self, state_format="json", datetime_format="%Y-%m-%d %H:%M:%S") -> None:
         self.state: dict = {}
         self.datetime_format: str = datetime_format
         self.state_format: str = state_format
@@ -15,7 +17,7 @@ class BaseState(ABC):
     def write_state(self) -> None:
         pass
 
-    def get_last_modified_datetime(self, key: str) -> datetime:
+    def get_last_modified_datetime(self, key: str) -> Optional[datetime]:
         raw_last_modified = self.state.get(key, {}).get("last_modified", None)
         if raw_last_modified is not None:
             return datetime.strptime(raw_last_modified, self.datetime_format)

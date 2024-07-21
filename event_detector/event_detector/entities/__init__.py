@@ -1,6 +1,7 @@
 from .dispatchers.pubsub_dispatcher import PubSubDispatcher
 
 from .files.http_file import HTTPFile
+from .files.ftp_file import FTPFile
 
 from .states.local_state import LocalState
 from .states.cloud_storage_state import CloudStorageState

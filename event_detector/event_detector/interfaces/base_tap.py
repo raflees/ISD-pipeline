@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Iterable
 
 from .base_state import BaseState
+from .base_file import BaseFile
 
 class BaseTap(ABC):
     def __init__(self, pattern: str, state: BaseState):
@@ -9,7 +10,7 @@ class BaseTap(ABC):
         self.state = state
     
     @abstractmethod
-    def get_changed_files() -> Iterable[str]:
+    def get_changed_files(self) -> Iterable[BaseFile]:
         pass
     
     def write_state(self):
