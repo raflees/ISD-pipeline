@@ -1,11 +1,20 @@
 from datetime import datetime
 
 from google import pubsub_v1
+import pytest
 
 from event_detector.entities import PubSubDispatcher
 
+class MockClient:
+    def topic_path(self, project_id, topic):
+        return 'test_topic'
+    
 class MockTopic():
     messages = []
+
+@pytest.fixture(autouse=True)
+def mock_client(monkeypatch):
+    monkeypatch.setattr(PubSubDispatcher, "_get_client", lambda self: MockClient())
 
 def mock_publish(self, request):
     for message in request.messages:
