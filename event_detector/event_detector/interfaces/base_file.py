@@ -1,15 +1,18 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Union
+from typing import Optional, Union
 
 from event_detector.helper_methods import parse_datetime
 
 class BaseFile(ABC):
     def __init__(self, name: str, last_modified: Union[datetime, str]):
         self.name = name
+        self.last_modified: Optional[datetime] = None
         if type(last_modified) == str:
-            last_modified = parse_datetime(last_modified)
-        self.last_modified: datetime = last_modified
+            self.last_modified = parse_datetime(last_modified)
+        if type(last_modified) == datetime:
+            self.last_modified = last_modified
+        
 
     @abstractmethod
     def to_dict(self) -> dict:

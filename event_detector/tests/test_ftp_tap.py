@@ -1,6 +1,6 @@
 from unittest.mock import patch, Mock
 
-from event_detector.entities import FTPTap, LocalState
+from event_detector.entities import FTPFile, FTPTap, LocalState
 
 state = LocalState("tests/test_data/local_state.json")
 
@@ -14,7 +14,7 @@ def test_file_is_modified(monkeypatch):
     monkeypatch.setattr(FTPTap, 'get_file_list', patch_get_file_list)
     monkeypatch.setattr(FTPTap, 'connect', lambda self: None)
 
-    tap = FTPTap("dummy_host", state)
-    changed_files = tap.get_changed_files("file")
-    assert set(changed_files) == set(["file2"])
+    tap = FTPTap("dummy_host", "file", state)
+    changed_files = tap.get_changed_files()
+    assert set(changed_files) == set([FTPFile("file2", "/file2", "20240101120000")])
     

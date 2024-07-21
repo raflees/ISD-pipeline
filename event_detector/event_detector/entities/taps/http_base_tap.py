@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 from event_detector.interfaces import BaseTap, BaseState
+from event_detector.entities import HTTPFile
 
 class HTTPBaseTap(BaseTap, ABC):
     def __init__(self, base_url: str, pattern: str, state: BaseState):
@@ -14,14 +15,11 @@ class HTTPBaseTap(BaseTap, ABC):
         self.base_url = base_url
     
     @abstractmethod
-    def get_target_files(self) -> Iterable[str]:
+    def get_target_files(self) -> Iterable[HTTPFile]:
         """
         Returns all files that should be downloaded in a form of a list of urls
         """
         pass
-    
-    def get_changed_files() -> Iterable[str]:
-        super().get_changed_files()
     
     @staticmethod
     def _get_soup_from_url(url: str) -> BeautifulSoup:
