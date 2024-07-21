@@ -5,6 +5,9 @@ jobs:
   test_event_detector:
     name: Test Event Detector
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./event_detector
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v4
@@ -16,15 +19,11 @@ jobs:
         uses: snok/install-poetry@v1
         with:
           version: '1.8.3'
-      - name: Start Poetry Shell
-        working-directory: ./event_detector
-        run: poetry shell
       - name: Install Poetry Dependencies
-        working-directory: ./event_detector
         run: poetry install
       - name: Test Event Detector
-        working-directory: ./event_detector
-        run: pytest -vv
+        run: |
+          source .venv/bin/activate
+          pytest -vv
       - name: Check MyPy Event Detector
-        working-directory: ./event_detector
         run: mypy -p event_detector
