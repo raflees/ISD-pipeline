@@ -1,20 +1,21 @@
 name: Test Code
-on: [push]
-  jobs:
-    test_event_detector:
-      name: Test Event Detector
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout Branch
-          uses: actions/checkout@v4
-        - name: Install Poetry
-          run: pip install poetry==1.8.3
-        - name: Install Poetry Dependencies
-          working-directory: ./event_detector
-          run: poetry install
-        - name: Test Event Detector
-          working-directory: ./event_detector
-          run: pytest -vv
-        - name: Check MyPy Event Detector
-          working-directory: ./event_detector
-          run: mypy - event_detector
+on:
+  push:
+    jobs:
+      test_event_detector:
+        name: Test Event Detector
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Branch
+            uses: actions/checkout@v4
+          - name: Install Poetry
+            run: pip install poetry==1.8.3
+          - name: Install Poetry Dependencies
+            working-directory: ./event_detector
+            run: poetry install
+          - name: Test Event Detector
+            working-directory: ./event_detector
+            run: pytest -vv
+          - name: Check MyPy Event Detector
+            working-directory: ./event_detector
+            run: mypy - event_detector
