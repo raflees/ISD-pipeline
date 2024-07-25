@@ -1,3 +1,4 @@
+import json
 from typing import Iterable
 
 from google import pubsub_v1
@@ -19,9 +20,13 @@ class PuSubParser(TargetInfoParser):
             subscription=self.subscription,
             max_messages=100
         )
-        response = self.client.pull(request)
+        response: pubsub_v1.PullResponse = self.client.pull(request)
 
         return response.received_messages
 
+    ## TEST ME
     def parse_target_info(self) -> Iterable[dict]:
-        return super().parse_target_info()
+        for message in self._pull_messages():
+            data: list = eval(message.data)
+            for file_info in data:
+                yield {"file_name": file_info["file_name"], "file_url": file_info["url"]}
