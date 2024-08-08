@@ -4,6 +4,10 @@ import pytest
 from ingest.entities import PubSubParser
 
 @dataclass
+class MockPubSubClient:
+    pass
+
+@dataclass
 class MockPubSubMessageContent:
     data: bytes
 
@@ -20,6 +24,10 @@ def test_pull_messages(patch_pull_messages):
         {"file_name": "file2.gz", "file_url": "https://test.com/file2.gz"},
         {"file_name": "file3.gz", "file_url": "https://test.com/file3.gz"},
     ]
+
+@pytest.fixture
+def patch_get_client(monkeypatch):
+    monkeypatch.setattr(PubSubParser, "_get_client", MockPubSubClient())
 
 @pytest.fixture
 def patch_pull_messages(monkeypatch):
