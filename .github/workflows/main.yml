@@ -5,6 +5,9 @@ jobs:
   test_event_detector:
     name: Test Event Detector
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./event_detector
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v4
@@ -20,24 +23,40 @@ jobs:
           virtualenvs-in-project: true
       - name: Install Poetry Dependencies
         run: poetry install
-      - name: Test Event Detector
-        working-directory: ./event_detector
+      - name: Pytest
         run: |
           source .venv/bin/activate
           pytest -vv
-      - name: Check MyPy Event Detector
-        working-directory: ./event_detector
+      - name: Check MyPy
         run: |
           source .venv/bin/activate
           mypy
-      - name: Test Ingest
+  test_ingest:
+    name: Test Ingest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
         working-directory: ./ingest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: '1.8.3'
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+      - name: Install Poetry Dependencies
+        run: poetry install
+      - name: Pytest
         run: |
           source .venv/bin/activate
           pytest -vv
-      - name: Check MyPy Ingest
-        working-directory: ./ingest
+      - name: Check MyPy
         run: |
           source .venv/bin/activate
           mypy
-      
