@@ -17,7 +17,7 @@ class MockPubSubMessage:
     def __init__(self, data: str):
         self.message = MockPubSubMessageContent(data.encode())
 
-def test_pull_messages(patch_pull_messages):
+def test_pull_messages(patch_get_client, patch_pull_messages):
     parser = PubSubParser({"pubsub": {"subscription": "test"}})
     assert list(parser.parse_target_info()) == [
         {"file_name": "file1.gz", "file_url": "https://test.com/file1.gz"},
@@ -27,7 +27,7 @@ def test_pull_messages(patch_pull_messages):
 
 @pytest.fixture
 def patch_get_client(monkeypatch):
-    monkeypatch.setattr(PubSubParser, "_get_client", MockPubSubClient())
+    monkeypatch.setattr(PubSubParser, "_get_client", MockPubSubClient)
 
 @pytest.fixture
 def patch_pull_messages(monkeypatch):
