@@ -5,9 +5,6 @@ jobs:
   test_event_detector:
     name: Test Event Detector
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./event_detector
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v4
@@ -24,10 +21,23 @@ jobs:
       - name: Install Poetry Dependencies
         run: poetry install
       - name: Test Event Detector
+        working-directory: ./event_detector
         run: |
           source .venv/bin/activate
           pytest -vv
       - name: Check MyPy Event Detector
+        working-directory: ./event_detector
         run: |
           source .venv/bin/activate
           mypy
+      - name: Test Ingest
+        working-directory: ./ingest
+        run: |
+          source .venv/bin/activate
+          pytest -vv
+      - name: Check MyPy Ingest
+        working-directory: ./ingest
+        run: |
+          source .venv/bin/activate
+          mypy
+      
