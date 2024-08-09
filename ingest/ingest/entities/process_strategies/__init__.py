@@ -1,0 +1,1 @@
+from ingest.entities.process_strategies.encapsulate_json import EncapsulateJson

@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 
+import pandas as pd
+
 class ProcessStrategy(ABC):
+    @staticmethod
     @abstractmethod
-    def process_file(input_path: str, output_path: str) -> None:
+    def process_data(self, df: pd.DataFrame) -> None:
         pass
