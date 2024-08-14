@@ -1,0 +1,31 @@
+from os import makedirs
+from os.path import basename, join
+from typing import Dict, Iterable
+import pandas as pd
+
+from ingest.interfaces import FileProcessor, ProcessStrategy
+from ingest.entities import EncapsulateJson
+
+class CSVFileProcessor(FileProcessor):
+    @property
+    def _processing_strategies_catalog(self) -> Dict[str, ProcessStrategy]:
+        return {
+            "encapsulate_json": EncapsulateJson
+        }
+
+    def _process_file(self, path: str):
+        file_name = basename(path)
+        df = self._read_file_content(path)
+        for strategy in self._processing_strategies:
+            df = strategy.process_data(df)
+        print(df.head())
+        self._save_file(df, file_name)
+    
+    def _save_file(self, df: pd.DataFrame, file_name: str):
+        makedirs(self._output_dir)
+        full_output_file_path = join(self._output_dir, file_name)
+        print("Saving file to", full_output_file_path)
+        df.to_csv(full_output_file_path, index=False)
+    
+    def _read_file_content(self, input_path: str) -> pd.DataFrame:
+        return pd.read_csv(input_path)
