@@ -1,6 +1,6 @@
 from os import makedirs
-from os.path import basename, join
-from typing import Dict, Iterable
+from os.path import basename, join, splitext
+from typing import Dict
 import pandas as pd
 
 from ingest.interfaces import FileProcessor, ProcessStrategy
@@ -21,11 +21,21 @@ class CSVFileProcessor(FileProcessor):
         print(df.head())
         self._save_file(df, file_name)
     
+    def _read_file_content(self, input_path: str) -> pd.DataFrame:
+        return pd.read_csv(input_path)
+    
     def _save_file(self, df: pd.DataFrame, file_name: str):
         makedirs(self._output_dir)
         full_output_file_path = join(self._output_dir, file_name)
         print("Saving file to", full_output_file_path)
         df.to_csv(full_output_file_path, index=False)
     
-    def _read_file_content(self, input_path: str) -> pd.DataFrame:
-        return pd.read_csv(input_path)
+    @staticmethod
+    def _get_file_name_with_csv_ext(file_name: str):
+        base_name, extension = splitext(file_name)
+        if extension == ".csv":
+            return file_name
+        elif extension == "":
+            return f"{base_name}.csv"
+        else:
+            return f"{base_name}_{extension.lstrip('.')}.csv"

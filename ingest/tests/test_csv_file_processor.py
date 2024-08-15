@@ -35,3 +35,8 @@ def test_processor_encapsulate_json_strategy(tmpdir):
 
 def assert_processed_data_equals(expected_data, tmpdir):
     assert pd.read_csv(f"{tmpdir}/.output/sample_csv.csv").to_dict('records') == expected_data
+
+def test_get_file_name_with_csv_extension():
+    assert CSVFileProcessor._get_file_name_with_csv_ext("test_file.csv") == "test_file.csv"
+    assert CSVFileProcessor._get_file_name_with_csv_ext("test_file") == "test_file.csv"
+    assert CSVFileProcessor._get_file_name_with_csv_ext("test_file.json") == "test_file_json.csv"

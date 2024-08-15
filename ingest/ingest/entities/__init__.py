@@ -2,3 +2,4 @@ from ingest.entities.process_strategies.encapsulate_json import EncapsulateJson
 
 from ingest.entities.file_processors.csv_file_processor import CSVFileProcessor
 from ingest.entities.target_info_parsers.pubsub_parser import PubSubParser
+from ingest.entities.ingest_taps.http_file_download_tap import HTTPFileDownloadTap
