@@ -1,3 +1,4 @@
+import logging
 from os import makedirs
 from os.path import basename, join, splitext
 from typing import Dict
@@ -18,10 +19,10 @@ class CSVFileProcessor(FileProcessor):
         df = self._read_file_content(path)
         for strategy in self._processing_strategies:
             df = strategy.process_data(df)
-        print(df.head())
         self._save_file(df, file_name)
     
     def _read_file_content(self, input_path: str) -> pd.DataFrame:
+        logging.info(f"Reading file {input_path}")
         return pd.read_csv(input_path)
     
     def _save_file(self, df: pd.DataFrame, file_name: str):

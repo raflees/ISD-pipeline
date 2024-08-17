@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Iterable, Optional
+from typing import Dict, Iterable, Optional, Union
 
 import pandas as pd
 
@@ -7,10 +7,13 @@ from ingest.interfaces import ProcessStrategy
 
 class FileProcessor(ABC):
     def __init__(self, 
-                 local_target_paths: Iterable[str],
+                 local_target_paths: Union[Iterable[str], str],
                  processing_strategies: Iterable[str],
                  output_dir: Optional[str]):
-        self._local_target_paths = local_target_paths
+        if isinstance(local_target_paths, str):
+            self._local_target_paths = [local_target_paths,]
+        else:
+            self._local_target_paths = [path for path in local_target_paths]
         self._output_dir = output_dir or self._get_default_output_dir()
         self._processing_strategies = self._create_processing_strategies(processing_strategies)
     
