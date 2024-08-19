@@ -56,4 +56,7 @@ docs/_build/
 
 # Temp files
 event_detector.zip
+ingest.zip
 **/.state/**
+**/.downloaded/**
+**/.final/**
