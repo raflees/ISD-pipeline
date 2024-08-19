@@ -1,3 +1,6 @@
 project_id: cellular-retina-427804-i7
 pubsub:
   subscription_name: projects/cellular-retina-427804-i7/subscriptions/isd-pipeline-changed-files-sub
+bigquery:
+  dataset: isd_raw
+  table: intergrated_surface_data

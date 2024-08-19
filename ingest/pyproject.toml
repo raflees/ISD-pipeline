@@ -12,6 +12,7 @@ google-cloud-storage = "^2.18.0"
 functions-framework = "^3.8.0"
 pandas = "^2.2.2"
 setuptools = "^72.1.0"
+google-cloud-bigquery = "^3.25.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.1"
