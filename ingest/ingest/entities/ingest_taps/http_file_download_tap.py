@@ -11,15 +11,26 @@ from ingest.entities import CSVFileProcessor
 class HTTPFileDownloadTap(IngestTap):
     def __init__(self, config: dict, target_information: List[dict]):
         super().__init__(config, target_information)
-        self._download_dir = self.download_dir()
         self.downloaded_paths: List[str] = []
-        makedirs(self._download_dir)
+        self._make_download_dir()
     
     @property
-    def download_dir(self):
+    def _download_dir(self):
         return ".downloaded/"
+
+    @property
+    def load_stage_dir(self):
+        return ".final/"
+    
+    def _make_download_dir(self):
+        try:
+            download_dir = self._download_dir
+            makedirs(download_dir)
+        except FileExistsError:
+            pass
     
     def ingest_data(self):
+        logging.info(f"Ingesting data\n{self._target_information}")
         for target in self._target_information:
             downloaded_file_path = self._ingest_data(target)
             self.downloaded_paths.append(downloaded_file_path)
@@ -45,7 +56,8 @@ class HTTPFileDownloadTap(IngestTap):
     def _get_file_processor(self, local_file_path):
         extension = self._get_file_extension(local_file_path)
         if extension == ".csv" or extension == "":
-            return CSVFileProcessor(local_file_path, self._processing_strategies, ".final/")
+            headers = self._config.get("table", {}).get("headers")
+            return CSVFileProcessor(local_file_path, self._processing_strategies, self.load_stage_dir, override_header=headers)
         else:
             logging.warning(f"Could not find a compatible file processor for {local_file_path}")
 

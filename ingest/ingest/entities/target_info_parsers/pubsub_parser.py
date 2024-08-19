@@ -32,9 +32,10 @@ class PubSubParser(TargetInfoParser):
         except json.JSONDecodeError:
             raise ValueError(f"Unable to parse message to json: {unnested_raw_data}")
 
-    ## TEST ME
     def parse_target_info(self) -> Iterable[dict]:
+        target_information = []
         for raw_message in self._pull_messages():
             files_data = self._parse_received_message_into_file_data(raw_message)
             for file_data in files_data:
-                yield {"file_name": file_data["file_name"], "file_url": file_data["url"]}
+                target_information.append({"file_name": file_data["file_name"], "file_url": file_data["url"]})
+        return target_information

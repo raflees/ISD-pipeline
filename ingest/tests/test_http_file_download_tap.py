@@ -37,7 +37,7 @@ def patch_download_call(monkeypatch):
     monkeypatch.setattr(HTTPFileDownloadTap, "_download_file", mock_download_file)
 
 def patch_download_dir(monkeypatch, download_dir):
-    monkeypatch.setattr(HTTPFileDownloadTap, "download_dir", lambda self: download_dir)
+    monkeypatch.setattr(HTTPFileDownloadTap, "_download_dir", download_dir)
 
 def patch_save_file(monkeypatch):
     monkeypatch.setattr(CSVFileProcessor, "_save_file", lambda self, df, file_name: None)

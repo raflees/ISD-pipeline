@@ -15,7 +15,7 @@ config = {
 
 def test_get_table_id():
     loader = FileBigQueryLoader(config)
-    assert loader._get_table_id() == "`test-project.test_dataset.test_table`"
+    assert loader._get_table_id() == "test-project.test_dataset.test_table"
 
 def test_load_job_config():
     loader = FileBigQueryLoader(config)
