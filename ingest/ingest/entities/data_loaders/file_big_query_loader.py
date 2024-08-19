@@ -16,7 +16,7 @@ class FileBigQueryLoader(DataLoader):
     def _get_client() -> bigquery.Client:
         return bigquery.Client()
 
-    def load_data(self, source_files_dir: str):
+    def load_data(self, source_files_dir):
         for file in self._get_files_to_load(source_files_dir):
             self._load_file(file)
     

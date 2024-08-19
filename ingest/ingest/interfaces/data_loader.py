@@ -5,5 +5,5 @@ class DataLoader(ABC):
         self._config = config
     
     @abstractmethod
-    def load_data(source_files_dir: str) -> None:
+    def load_data(self, source_files_dir: str) -> None:
         pass

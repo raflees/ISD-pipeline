@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Iterable, Optional, Union
+from typing import Any, Callable, Dict, Iterable, Optional, Union
 
 import pandas as pd
 
@@ -19,12 +19,12 @@ class FileProcessor(ABC):
     
     @property
     @abstractmethod
-    def _processing_strategies_catalog(self) -> Dict[str, ProcessStrategy]:
+    def _processing_strategies_catalog(self) -> Dict[str, Callable[..., ProcessStrategy]]:
         return {}
 
     def _create_processing_strategies(self, processing_strategies: Iterable[str]) -> Iterable[ProcessStrategy]:
         try:
-            return [self._processing_strategies_catalog[ps] for ps in processing_strategies]
+            return [self._processing_strategies_catalog[ps]() for ps in processing_strategies]
         except KeyError as e:
             msg = (f"Could not find one or more described processing strategies: {processing_strategies}\n" +
                    f"Accepted values: {list(self._processing_strategies_catalog.keys())}")
@@ -47,5 +47,5 @@ class FileProcessor(ABC):
         pass
 
     @abstractmethod
-    def _save_file(self, df: pd.DataFrame):
+    def _save_file(self, df: pd.DataFrame, file_name: str):
         pass

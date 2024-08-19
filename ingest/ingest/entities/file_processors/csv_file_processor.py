@@ -1,15 +1,14 @@
 import logging
 from os import makedirs
 from os.path import basename, join, splitext
-from typing import Dict
 import pandas as pd
 
-from ingest.interfaces import FileProcessor, ProcessStrategy
+from ingest.interfaces import FileProcessor
 from ingest.entities import EncapsulateJson
 
 class CSVFileProcessor(FileProcessor):
     @property
-    def _processing_strategies_catalog(self) -> Dict[str, ProcessStrategy]:
+    def _processing_strategies_catalog(self):
         return {
             "encapsulate_json": EncapsulateJson
         }
@@ -32,7 +31,7 @@ class CSVFileProcessor(FileProcessor):
         df.to_csv(full_output_file_path, index=False)
     
     @staticmethod
-    def _get_file_name_with_csv_ext(file_name: str):
+    def _get_file_name_with_csv_ext(file_name: str) -> str:
         base_name, extension = splitext(file_name)
         if extension == ".csv":
             return file_name
