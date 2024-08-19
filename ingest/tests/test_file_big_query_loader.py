@@ -30,10 +30,10 @@ def test_load_job_config():
 def test_list_files_to_load():
     loader = FileBigQueryLoader(config)
     files_to_load = loader._get_files_to_load("tests/test_data/")
-    assert files_to_load == (
+    assert set(files_to_load) == set([
         "tests/test_data/csv_no_header.csv",
         "tests/test_data/sample_csv.csv"
-        )
+    ])
 
 def test_load_data():
     loader = FileBigQueryLoader(config)
