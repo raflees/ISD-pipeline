@@ -1,4 +1,5 @@
 from ingest.interfaces.process_strategy import ProcessStrategy
+from ingest.interfaces.files_data_loader import FilesDataLoader
 
 from ingest.interfaces.data_loader import DataLoader
 from ingest.interfaces.file_processor import FileProcessor
