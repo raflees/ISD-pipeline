@@ -1,6 +1,7 @@
 from ingest.entities.process_strategies.encapsulate_json import EncapsulateJson
 
-from ingest.entities.file_processors.csv_file_processor import CSVFileProcessor
-from ingest.entities.target_info_parsers.pubsub_parser import PubSubParser
-from ingest.entities.ingest_taps.http_file_download_tap import HTTPFileDownloadTap
 from ingest.entities.data_loaders.file_big_query_loader import FileBigQueryLoader
+from ingest.entities.data_loaders.file_cloud_storage_loader import FileCloudStorageLoader
+from ingest.entities.file_processors.csv_file_processor import CSVFileProcessor
+from ingest.entities.taps.http_file_download_tap import HTTPFileDownloadTap
+from ingest.entities.target_info_parsers.pubsub_parser import PubSubParser

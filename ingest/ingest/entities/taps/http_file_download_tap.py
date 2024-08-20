@@ -51,6 +51,7 @@ class HTTPFileDownloadTap(IngestTap):
     def _process_data(self, local_file_path):
         processor = self._get_file_processor(local_file_path)
         if processor:
+            logging.info(f"Processing file {local_file_path}")
             processor.process_data()
     
     def _get_file_processor(self, local_file_path):
@@ -62,6 +63,7 @@ class HTTPFileDownloadTap(IngestTap):
             logging.warning(f"Could not find a compatible file processor for {local_file_path}")
 
     def _process_compressed_file(self, path_to_zip: str):
+        logging.info(f"Extracting {path_to_zip}")
         extracted_files = self._extract_and_list_files(path_to_zip)
         for file in extracted_files:
             self._process_data(file)

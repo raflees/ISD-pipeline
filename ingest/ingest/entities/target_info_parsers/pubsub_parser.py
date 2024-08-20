@@ -1,3 +1,4 @@
+import logging
 import json
 from typing import Any, Dict, Iterable
 
@@ -8,8 +9,8 @@ from ingest.interfaces import TargetInfoParser
 class PubSubParser(TargetInfoParser):
     def __init__(self, config: dict):
         super().__init__(config)
-        self.subscription: str = config["pubsub"]["subscription"]
-        self.client = self._get_client()
+        self._subscription: str = config["pubsub"]["subscription"]
+        self._client = self._get_client()
 
     @staticmethod
     def _get_client() -> pubsub_v1.SubscriberClient:
@@ -17,10 +18,10 @@ class PubSubParser(TargetInfoParser):
 
     def _pull_messages(self) -> Iterable[Dict[str, Any]]:
         request = pubsub_v1.PullRequest(
-            subscription=self.subscription,
+            subscription=self._subscription,
             max_messages=100
         )
-        response: pubsub_v1.PullResponse = self.client.pull(request)
+        response: pubsub_v1.PullResponse = self._client.pull(request)
         return response.received_messages
 
     def _parse_received_message_into_file_data(self, pubsub_message):
@@ -33,9 +34,11 @@ class PubSubParser(TargetInfoParser):
             raise ValueError(f"Unable to parse message to json: {unnested_raw_data}")
 
     def parse_target_info(self) -> Iterable[dict]:
-        target_information = []
+        target_information = {}
+        logging.info(f"Pulling messages from {self._subscription}")
         for raw_message in self._pull_messages():
             files_data = self._parse_received_message_into_file_data(raw_message)
             for file_data in files_data:
-                target_information.append({"file_name": file_data["file_name"], "file_url": file_data["url"]})
-        return target_information
+                key = (file_data["file_name"], file_data["url"])
+                target_information[key] = {"file_name": file_data["file_name"], "file_url": file_data["url"]}
+        return target_information.values()
