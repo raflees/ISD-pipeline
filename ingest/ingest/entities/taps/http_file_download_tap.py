@@ -30,8 +30,9 @@ class HTTPFileDownloadTap(IngestTap):
             pass
     
     def ingest_data(self):
-        logging.info(f"Ingesting data\n{self._target_information}")
-        for target in self._target_information:
+        logging.info(f"Ingesting data")
+        for idx, target in enumerate(self._target_information):
+            logging.info(f"File {idx+1}/{len(self._target_information)}")
             downloaded_file_path = self._ingest_data(target)
             self.downloaded_paths.append(downloaded_file_path)
             if self._is_compressed_file(downloaded_file_path):

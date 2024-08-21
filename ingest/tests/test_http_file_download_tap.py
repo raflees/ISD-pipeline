@@ -41,7 +41,3 @@ def patch_download_dir(monkeypatch, download_dir):
 
 def patch_save_file(monkeypatch):
     monkeypatch.setattr(CSVFileProcessor, "_save_file", lambda self, df, file_name: None)
-
-def print_dir(path):
-    for base_dir, dir_list, file_list in walk(path):
-        print(base_dir, dir_list, file_list)
