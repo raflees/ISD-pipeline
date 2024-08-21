@@ -49,7 +49,7 @@ class CSVFileProcessor(FileProcessor):
     
     def _save_file(self, df: pd.DataFrame, file_name: str):
         full_output_file_path = join(self._output_dir, file_name)
-        print("Saving file to", full_output_file_path)
+        logging.info(f"Saving file to {full_output_file_path}")
         df.to_csv(full_output_file_path, index=False)
     
     @staticmethod
