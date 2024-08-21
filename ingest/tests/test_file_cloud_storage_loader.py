@@ -12,6 +12,12 @@ config = {
     }
 }
 
+def test_add_extension_to_file_if_none():
+    loader = FileCloudStorageLoader(config)
+    loader._add_extension_to_file_if_none("file") == "file.csv"
+    loader._add_extension_to_file_if_none("test/file.csv") == "file.csv"
+    loader._add_extension_to_file_if_none("file.json") == "file.json"
+
 def test_load_data():
     loader = FileCloudStorageLoader(config)
     loader._load_file = Mock()
