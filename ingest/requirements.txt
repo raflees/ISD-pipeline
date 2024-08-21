@@ -1,0 +1,7 @@
+flask
+functions-framework==3.*
+google-cloud-bigquery
+google-cloud-pubsub
+google-cloud-storage
+pandas
+pyyaml
