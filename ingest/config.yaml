@@ -9,5 +9,5 @@ pubsub:
 processing_strategies:
   - encapsulate_json
 table:
-  header:
+  headers:
     - data
