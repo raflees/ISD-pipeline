@@ -3,6 +3,6 @@ gcloud functions deploy event_detector_test \
     --region=us-central1 \
     --runtime=python312 \
     --memory=256MB \
-    --source=./event_detector \
+    --source=. \
     --entry-point=event_detector \
     --trigger-http --allow-unauthenticated

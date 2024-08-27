@@ -19,4 +19,4 @@ jobs:
       #   run: sudo apt-get update && sudo apt-get install google-cloud-cli
       - name: Deploy Event Detector
         working-directory: ./event_detector
-        run: bash deploy.sh
+        run: bash -x deploy.sh
