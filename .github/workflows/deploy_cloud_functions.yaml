@@ -20,9 +20,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: 'google-github-actions/setup-gcloud@v2'
       - name: Setup GA Service Account
-        run: gcloud config set account isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com
+        run: gcloud config set auth/impersonate_service_account isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com
       - name: Deploy Event Detector
         working-directory: ${{ matrix.work-dir }}
-        run: |
-          gcloud config set account isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com
-          bash -x deploy.sh
+        run: bash -x deploy.sh
