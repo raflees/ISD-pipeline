@@ -19,17 +19,6 @@ jobs:
           credentials_json: '${{ secrets.SA_KEY }}'
       - name: Set up Cloud SDK
         uses: 'google-github-actions/setup-gcloud@v2'
-      # - name: Install GCloud
-      #   run: sudo apt-get update && sudo apt-get install google-cloud-cli
-      # - name: Deploy Event Detector
-      #   working-directory: ./event_detector
-      #   run: bash -x deploy.sh
       - name: Deploy Event Detector
-        uses: 'google-github-actions/deploy-cloud-functions@v3'
-        timeout-minutes: 5
-        with:
-          name: 'my-event_detector_test'
-          runtime: 'python312'
-          source_dir: ./event_detector/
-          memory: 256M
-          entry_point: event_detector
+        working-directory: ./event_detector
+        run: bash -x deploy.sh

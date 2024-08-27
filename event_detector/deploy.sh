@@ -6,4 +6,5 @@ gcloud functions deploy event_detector_test \
     --runtime=python312 \
     --memory=256MB \
     --entry-point=event_detector \
-    --trigger-http --allow-unauthenticated
+    --trigger-http --allow-unauthenticated \
+    --impersonate-service-account
