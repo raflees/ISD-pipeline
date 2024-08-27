@@ -1,0 +1,14 @@
+__pycache__/
+.mypy_cache/
+.venv/
+.pytest_cache/
+
+.gcloudignore
+.python-version
+
+tests/
+
+poetry.lock
+pyproject.toml
+pytest.ini
+README.md
