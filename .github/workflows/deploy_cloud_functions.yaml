@@ -1,0 +1,39 @@
+name: Deploy Cloud Functions
+on:
+  push:
+      branches:
+        - master
+jobs:
+  deploy_functions:
+    name: Deploy Cloud Functions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v4
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: cellular-retina-427804-i7
+          service_account: 'isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com'
+          credentials_json: '${{ secrets.SA_KEY }}'
+      - name: Set up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v2'
+      - name: Deploy Event Detector
+        uses: 'google-github-actions/deploy-cloud-functions@v3'
+        timeout-minutes: 5
+        with:
+          name: event_detector
+          runtime: 'python312'
+          source_dir: ./event_detector/
+          memory: 256M
+          entry_point: event_detector
+      - name: Deploy Ingest
+        uses: 'google-github-actions/deploy-cloud-functions@v3'
+        timeout-minutes: 5
+        with:
+          name: ingest
+          runtime: 'python312'
+          source_dir: ./ingest/
+          memory: 2048M
+          entry_point: ingest
+          event_trigger_pubsub_topic: projects/cellular-retina-427804-i7/topics/isd-pipeline-changed-files
