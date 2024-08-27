@@ -17,10 +17,10 @@ jobs:
           project_id: cellular-retina-427804-i7
           service_account: 'isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com'
           credentials_json: '${{ secrets.SA_KEY }}'
-      - name: Setup GA Service Account
-        run: gcloud config set account isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com
       - name: Set up Cloud SDK
         uses: 'google-github-actions/setup-gcloud@v2'
+      - name: Setup GA Service Account
+        run: gcloud config set account isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com
       - name: Deploy Event Detector
         working-directory: ./event_detector
         run: bash -x deploy.sh
