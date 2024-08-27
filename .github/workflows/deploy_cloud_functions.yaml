@@ -22,5 +22,7 @@ jobs:
       - name: Setup GA Service Account
         run: gcloud config set account isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com
       - name: Deploy Event Detector
-        working-directory: ./event_detector
-        run: bash -x deploy.sh
+        working-directory: ${{ matrix.work-dir }}
+        run: |
+          gcloud config set account isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com
+          bash -x deploy.sh
