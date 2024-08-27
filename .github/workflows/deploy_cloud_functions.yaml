@@ -7,7 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        work-dir: [./event_detector]
+        include:
+          - name: event_detector
+            memory: 256M
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v4
@@ -19,8 +21,12 @@ jobs:
           credentials_json: '${{ secrets.SA_KEY }}'
       - name: Set up Cloud SDK
         uses: 'google-github-actions/setup-gcloud@v2'
-      - name: Setup GA Service Account
-        run: gcloud config set auth/impersonate_service_account isd-pipeline-ga@cellular-retina-427804-i7.iam.gserviceaccount.com
       - name: Deploy Event Detector
-        working-directory: ${{ matrix.work-dir }}
-        run: bash -x deploy.sh
+        uses: 'google-github-actions/deploy-cloud-functions@v3'
+        timeout-minutes: 5
+        with:
+          name: ${{ matrix.name }}
+          runtime: 'python312'
+          source_dir: ./${{ matrix.name }}/
+          memory: ${{ matrix.memory }}
+          entry_point: ${{ matrix.name }}
