@@ -1,6 +1,8 @@
 name: Deploy Cloud Functions
 on:
   push:
+      branches:
+        - master
 jobs:
   deploy_functions:
     name: Deploy Cloud Functions
