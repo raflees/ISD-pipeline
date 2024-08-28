@@ -33,7 +33,13 @@ def ingest(request):
     setup_logging()
     config = load_config()
     parser = PubSubParser(config)
-    tap = HTTPFileDownloadTap(config, parser.parse_target_info())
+    
+    target_info = parser.parse_target_info()
+    if len(target_info) == 0:
+        logging.info("Found no files to download, finishing execution")
+        exit(0)
+
+    tap = HTTPFileDownloadTap(config, target_info)
     loader = FileCloudStorageLoader(config)
     
     tap.ingest_data()

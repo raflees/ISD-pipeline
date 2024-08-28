@@ -35,6 +35,11 @@ def test_parse_target_info_duplicated_messages(patch_get_client, patch_pull_dupl
         {"file_name": "file2.gz", "file_url": "https://test.com/file2.gz"},
     ]
 
+def test_no_messages_to_acknowledge():
+    parser = PubSubParser({"pubsub": {"subscription": "test"}})
+    parser._pulled_messages_ack_ids = []
+    parser.acknowledge_pulled_messages()
+
 @pytest.fixture
 def patch_get_client(monkeypatch):
     monkeypatch.setattr(PubSubParser, "_get_client", MockPubSubClient)
