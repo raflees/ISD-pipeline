@@ -6,7 +6,7 @@ from ingest.interfaces import ProcessStrategy
 
 class IngestTimestamp(ProcessStrategy):
     def process_data(self, input_data: pd.DataFrame):
-        logging.info("Applying encapsulate_json logic...")
+        logging.info("Applying ingest_timestamp logic...")
         ingest_timestamp = self._get_current_timestamp()
         df = input_data
         input_data["ingest_timestamp"] = datetime.isoformat(ingest_timestamp)

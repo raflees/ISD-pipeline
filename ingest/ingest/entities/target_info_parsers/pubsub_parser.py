@@ -48,6 +48,10 @@ class PubSubParser(TargetInfoParser):
             raise ValueError(f"Unable to parse message to json: {unnested_raw_data}")
 
     def acknowledge_pulled_messages(self):
+        if len(self._pulled_messages_ack_ids) == 0:
+            logging.info("No messages to acknowledge")
+            return
+        
         request = pubsub_v1.AcknowledgeRequest(
             subscription=self._subscription,
             ack_ids=self._pulled_messages_ack_ids,
