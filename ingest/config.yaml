@@ -8,6 +8,7 @@ pubsub:
   subscription: projects/cellular-retina-427804-i7/subscriptions/isd-pipeline-changed-files-sub
 processing_strategies:
   - encapsulate_json
+  - ingest_timestamp
 table:
   headers:
     - data
