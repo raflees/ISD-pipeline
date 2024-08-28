@@ -1,4 +1,5 @@
 from ingest.entities.process_strategies.encapsulate_json import EncapsulateJson
+from ingest.entities.process_strategies.ingest_timestamp import IngestTimestamp
 
 from ingest.entities.data_loaders.file_big_query_loader import FileBigQueryLoader
 from ingest.entities.data_loaders.file_cloud_storage_loader import FileCloudStorageLoader

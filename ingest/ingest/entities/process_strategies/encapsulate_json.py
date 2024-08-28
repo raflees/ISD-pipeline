@@ -2,9 +2,10 @@ import logging
 import json
 import pandas as pd
 
-class EncapsulateJson:
-    @staticmethod
-    def process_data(input_data: pd.DataFrame):
+from ingest.interfaces import ProcessStrategy
+
+class EncapsulateJson(ProcessStrategy):
+    def process_data(self, input_data: pd.DataFrame):
         logging.info("Applying encapsulate_json logic...")
         reduced_series = input_data.apply(
             lambda row_values: json.dumps({k: v for k, v in zip(input_data.columns, list(row_values))}),

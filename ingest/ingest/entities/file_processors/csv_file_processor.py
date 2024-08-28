@@ -5,7 +5,7 @@ import pandas as pd
 from typing import List, Literal, Optional
 
 from ingest.interfaces import FileProcessor
-from ingest.entities import EncapsulateJson
+from ingest.entities import EncapsulateJson, IngestTimestamp
 
 class CSVFileProcessor(FileProcessor):
     def __init__(self,
@@ -22,7 +22,8 @@ class CSVFileProcessor(FileProcessor):
     @property
     def _processing_strategies_catalog(self):
         return {
-            "encapsulate_json": EncapsulateJson
+            "encapsulate_json": EncapsulateJson,
+            "ingest_timestamp": IngestTimestamp,
         }
     
     def _make_output_dir(self):
