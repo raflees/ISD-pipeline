@@ -1,8 +1,0 @@
-version: 2
-
-sources:
-  - name: isd_raw
-    database: cellular-retina-427804-i7
-    schema: isd_raw
-    tables:
-      - name: raw_integrated_surface_data
