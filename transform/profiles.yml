@@ -1,0 +1,12 @@
+isd_pipeline:
+  target: default
+  outputs:
+    default:
+      type: bigquery
+      method: oauth
+      project: "cellular-retina-427804-i7"
+      dataset: "isd_pipeline"
+      threads: 8
+      timeout_seconds: 300
+      location: US
+      impersonate_service_account: "isd-pipeline-transform@cellular-retina-427804-i7.iam.gserviceaccount.com"
