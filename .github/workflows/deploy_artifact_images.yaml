@@ -11,6 +11,7 @@ jobs:
     env:
       AR_HOST: us-central1-docker.pkg.dev
       PROJECT_ID: cellular-retina-427804-i7
+      PUSH_TAG: us-central1-docker.pkg.dev/cellular-retina-427804-i7/gcf-artifacts/isd-transform:latest
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v4
@@ -25,6 +26,6 @@ jobs:
       - name: Authenticate Docker
         run: gcloud auth configure-docker ${{ env.AR_HOST }} --quiet
       - name: Build Transform Image
-        run: docker build -t latest .
+        run: docker build -t ${{ env.PUSH_TAG }} .
       - name: Push Transform Image
-        run: docker push latest
+        run: docker push ${{ env.PUSH_TAG }}
