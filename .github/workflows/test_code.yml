@@ -1,6 +1,6 @@
 name: Test Code
 on:
-  push:
+  push
 jobs:
   test_code:
     name: Test Code and Check Types

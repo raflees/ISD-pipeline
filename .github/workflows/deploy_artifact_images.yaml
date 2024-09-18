@@ -1,0 +1,31 @@
+name: Deploy Artifact Registry Images
+on:
+  push
+jobs:
+  deploy_images:
+    name: Deploy Transform Image
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./transform
+    env:
+      AR_HOST: us-central1-docker.pkg.dev
+      PROJECT_ID: cellular-retina-427804-i7
+      PUSH_TAG: $AR_HOST/cellular-retina-427804-i7/gcf-artifacts/isd-transform:${{ github.sha }}
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v4
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account: 'isd-pipeline-ga@${{ env.PROJECT_ID }}.iam.gserviceaccount.com'
+          credentials_json: '${{ secrets.SA_KEY }}'
+      - name: Set up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v2'
+      - name: Authenticate Docker
+        run: gcloud auth configure-docker ${{ env.AR_HOST }} --quiet
+      - name: Build Transform Image
+        run: docker build -t ${{ env.PUSH_TAG }} .
+      - name: Push Transform Image
+        run: docker push ${{ env.PUSH_TAG }} .
