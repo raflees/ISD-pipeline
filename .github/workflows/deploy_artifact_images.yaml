@@ -26,6 +26,6 @@ jobs:
       - name: Authenticate Docker
         run: gcloud auth configure-docker ${{ env.AR_HOST }} --quiet
       - name: Build Transform Image
-        run: docker build -t ${{ env.PUSH_TAG }} .
+        run: docker build -t ${{ env.PUSH_TAG }} -t latest .
       - name: Push Transform Image
         run: docker push ${{ env.PUSH_TAG }}
