@@ -29,4 +29,4 @@ class FileCloudStorageLoader(FilesDataLoader):
         file_name, extension = splitext(file_path)
         if extension == "":
             extension = ".csv"
-        return f"{file_name}.{extension}"
+        return f"{file_name}{extension}"

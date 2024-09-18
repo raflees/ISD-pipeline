@@ -1,6 +1,8 @@
 name: Deploy Artifact Registry Images
 on:
-  push
+  push:
+    branches:
+      - master
 jobs:
   deploy_images:
     name: Deploy Transform Image
