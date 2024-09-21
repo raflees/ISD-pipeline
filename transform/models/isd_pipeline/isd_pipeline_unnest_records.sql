@@ -1,10 +1,5 @@
-
-{{ config(
-    materialized='table'
-) }}
-
 SELECT
     JSON_VALUE(record, "$.data") raw_data,
-    CAST(ingest_timestamp AS TIMESTAMP) AS ingest_timestamp,
-    _FILE_NAME AS file_name,
+    ingest_timestamp,
+    _FILE_NAME AS file_uri,
 FROM {{ source('isd_raw', 'raw_integrated_surface_data') }}

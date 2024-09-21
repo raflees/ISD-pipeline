@@ -1,9 +1,5 @@
-{{ config(
-    materialized='table'
-) }}
-
 SELECT
-    file_name,
+    file_uri,
     raw_data,
     SUBSTR(raw_data, 1, 4) AS total_variable_characters,
     SUBSTR(raw_data, 5, 6) AS weather_station_catalog_id,
@@ -26,5 +22,16 @@ SELECT
     SUBSTR(raw_data, 76, 1) AS sky_ceiling_quality_code,
     SUBSTR(raw_data, 77, 1) AS sky_ceiling_determination_code,
     SUBSTR(raw_data, 78, 1) AS sky_cavok_code,
-    SUBSTR(raw_data, 79, 6) AS max_observation_distance_in_meters,
+    SUBSTR(raw_data, 79, 5) AS observation_distance,
+    SUBSTR(raw_data, 85, 1) AS observation_distance_quality_code,
+    SUBSTR(raw_data, 86, 1) AS observation_variability_code,
+    SUBSTR(raw_data, 87, 1) AS observation_quality_variability_code,
+    SUBSTR(raw_data, 88, 5) AS air_temperature,
+    SUBSTR(raw_data, 93, 1) AS air_temperature_quality_code,
+    SUBSTR(raw_data, 94, 5) AS dew_point_temperature,
+    SUBSTR(raw_data, 99, 1) AS dew_point_temperature_quality_code,
+    SUBSTR(raw_data, 100, 5) AS sea_level_pressure,
+    SUBSTR(raw_data, 105, 1) AS sea_level_pressure_quality_code,
+    SUBSTR(raw_data, 106) AS additional_data,
+    ingest_timestamp,
 FROM {{ ref('isd_pipeline_unnest_records') }}
