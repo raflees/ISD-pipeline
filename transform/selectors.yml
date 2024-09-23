@@ -1,0 +1,11 @@
+selectors:
+  - name: isd_pipeline_main
+    definition:
+      intersection:
+        - isd_pipeline
+        - exclude:
+          - isd_pipeline.value_maps
+  - name: isd_pipeline_value_maps
+    definition:
+      intersection:
+        - isd_pipeline.value_maps
