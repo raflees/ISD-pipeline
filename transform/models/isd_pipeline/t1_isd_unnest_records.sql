@@ -1,3 +1,7 @@
+{{ config(
+    alias='isd_pipeline_unnest_records'
+) }}
+
 SELECT
     JSON_VALUE(record, "$.data") raw_data,
     ingest_timestamp,

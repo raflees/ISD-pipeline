@@ -1,3 +1,7 @@
+{{ config(
+    alias='isd_unnest_fields'
+) }}
+
 SELECT
     file_uri,
     raw_data,
@@ -34,4 +38,4 @@ SELECT
     SUBSTR(raw_data, 105, 1) AS sea_level_pressure_quality_code,
     SUBSTR(raw_data, 106) AS additional_data,
     ingest_timestamp,
-FROM {{ ref('isd_pipeline_unnest_records') }}
+FROM {{ ref('t1_isd_unnest_records') }}

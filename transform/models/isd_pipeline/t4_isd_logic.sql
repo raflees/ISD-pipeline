@@ -1,0 +1,38 @@
+{{ config(
+    alias='isd_logic'
+) }}
+
+SELECT
+    row_hash,
+    file_uri,
+    weather_station_catalog_id,
+    weather_station_wban_id,
+    PARSE_TIMESTAMP('%Y%m%d%M%S', CONCAT(observation_date, observation_time), 'UTC') AS observation_timestamp,
+    data_source_flag,
+    CAST(latitude AS NUMERIC)/100 AS latitude,
+    CAST(longitude AS NUMERIC)/100 AS longitude,
+    TRIM(report_type_code) AS report_type_code,
+    CAST(elevation_in_meters AS NUMERIC) AS elevation_in_meters,
+    TRIM(station_call_letter_id) AS station_call_letter_id,
+    TRIM(quality_control_process_code) AS quality_control_process_code,
+    CAST(wind_direction_angle AS NUMERIC) AS wind_direction_angle,
+    wind_direction_quality_code,
+    wind_observation_type_code,
+    CAST(wind_speed_meters_per_second AS NUMERIC) AS wind_speed_meters_per_second,
+    wind_speed_quality_code,
+    CAST(sky_ceiling_height_in_meters AS NUMERIC) AS sky_ceiling_height_in_meters,
+    sky_ceiling_quality_code,
+    sky_ceiling_determination_code,
+    sky_cavok_code,
+    CAST(observation_distance AS NUMERIC) AS observation_distance,
+    observation_distance_quality_code,
+    observation_variability_code,
+    observation_quality_variability_code,
+    CAST(air_temperature AS NUMERIC) AS air_temperature,
+    air_temperature_quality_code,
+    CAST(dew_point_temperature AS NUMERIC) AS dew_point_temperature,
+    dew_point_temperature_quality_code,
+    CAST(sea_level_pressure AS NUMERIC) AS sea_level_pressure,
+    sea_level_pressure_quality_code,
+    CAST(ingest_timestamp AS TIMESTAMP) AS ingest_timestamp,
+FROM {{ ref('t3_isd_hashed') }}
