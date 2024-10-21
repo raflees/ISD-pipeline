@@ -7,7 +7,7 @@ SELECT
     file_uri,
     weather_station_catalog_id,
     weather_station_wban_id,
-    PARSE_TIMESTAMP('%Y%m%d%M%S', CONCAT(observation_date, observation_time), 'UTC') AS observation_timestamp,
+    PARSE_TIMESTAMP('%Y%m%d%H%M', CONCAT(observation_date, observation_time), 'UTC') AS observation_timestamp,
     data_source_flag,
     CAST(latitude AS NUMERIC)/100 AS latitude,
     CAST(longitude AS NUMERIC)/100 AS longitude,
