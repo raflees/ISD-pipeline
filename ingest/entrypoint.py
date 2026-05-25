@@ -1,7 +1,6 @@
 from datetime import datetime
+import json
 import logging
-from flask import Request
-import functions_framework
 
 import google.cloud.logging
 import yaml
@@ -22,13 +21,24 @@ def setup_logging():
     logging_client.setup_logging()
 
 def load_config() -> dict:
-    with open("config.yaml") as f:
-        config = yaml.safe_load(f)
-    logging.info(f"Loaded config {config}")
+    project_id = os.environ["PROJECT_ID"]
+    table_name = os.environ["BQ_TABLE_NAME"]
+    config = {
+        "project_id": project_id
+        "bigquery":
+            "dataset": table_name.split(".")[0]
+            "table": table_name.split(".")[1]
+        "storage":
+            "bucket": os.environ["GCS_BUCKET_NAME"]
+        "pubsub":
+            "subscription": f"projects/{project_id}/subscriptions/{os.environ['PUBSUB_SUBSCRIPTION_NAME']}"
+        "processing_strategies": json.loads(os.environ.get("PROCESSING_STRATEGIES") or [])
+        "table":
+            "headers": json.loads(os.environ["TABLE_HEADERS"])
+    }
     return config
 
-@functions_framework.http
-def ingest(request):
+def ingest():
     start_time = datetime.now()
     setup_logging()
     config = load_config()
@@ -51,5 +61,4 @@ def ingest(request):
     return 'OK'
 
 if __name__ == "__main__":
-    request = Request({})
-    ingest(request)
+    ingest()
