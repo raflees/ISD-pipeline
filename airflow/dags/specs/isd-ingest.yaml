@@ -1,0 +1,17 @@
+name: isd-ingest
+schedule: "@daily"
+triggers:
+  - image: isd-event-detector
+    tag: latest
+    envs:
+      FILE_PATTERN: "A(.*).gz"
+ingest:
+  - image: isd-ingest
+    tag: latest
+    envs:
+      PROJECT_ID: "cellular-retina-427804-i7"
+      BQ_TABLE_NAME: "isd_raw.intergrated_surface_data"
+      GCS_BUCKET_NAME: "isd-pipeline-raw-data"
+      PUBSUB_SUBSCRIPTION_NAME: "isd-pipeline-changed-files-sub"
+      PROCESSING_STRATEGIES: '["encapsulate_json", "ingest_timestamp"]'
+      TABLE_HEADERS: '["data"]'
