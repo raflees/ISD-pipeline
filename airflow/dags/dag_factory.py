@@ -6,12 +6,12 @@ from typing import Dict, Iterable
 from airflow.sdk import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.sdk.bases.operator import BaseOperator
-from irflow.providers.standard.operators.empty import EmptyOperator
+from airflow.providers.standard.operators.empty import EmptyOperator
 import yaml
 
 
 class DAGFactory:
-    SPECS_PATH = "dags/specs"
+    SPECS_PATH = "/opt/airflow/dags/specs"
     DEFAULT_DAG_ARGS = {
         "default_args": {
             "depends_on_past": False,
@@ -53,10 +53,11 @@ class DAGFactory:
             image = task_spec["image"]
             tag = task_spec.get("tag") or "latest"
             envs = task_spec.get("envs") or {}
+            task_id = task_spec.get("id") or f"{key}-{idx}"
             yield DockerOperator(
-                task_id=f"{key}-{idx}",
+                task_id=task_id,
                 image=f"{image}:{tag}",
-                environment=envs
+                environment=envs,
             )
     
     def _get_dag(self, spec: dict) -> DAG:
@@ -67,5 +68,7 @@ class DAGFactory:
             **self.DEFAULT_DAG_ARGS,
         )
 
-if __name__ == "__main__":
-    DAGFactory().generate_dags()
+
+factory = DAGFactory()
+dags = factory.generate_dags()
+globals().update(dags)

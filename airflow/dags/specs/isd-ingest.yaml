@@ -1,12 +1,19 @@
 name: isd-ingest
 schedule: "@daily"
 triggers:
-  - image: isd-event-detector
+  - id: isd-event-detector-pattern-1
+    image: raflees/http-event-detector
     tag: latest
     envs:
       FILE_PATTERN: "A(.*).gz"
+  - id: isd-event-detector-pattern-2
+    image: raflees/http-event-detector
+    tag: latest
+    envs:
+      FILE_PATTERN: "B(.*).gz"
 ingests:
-  - image: isd-ingest
+  - id: isd-ingest
+    image: raflees/isd-ingest
     tag: latest
     envs:
       PROJECT_ID: "cellular-retina-427804-i7"

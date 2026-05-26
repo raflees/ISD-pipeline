@@ -61,3 +61,6 @@ ingest.zip
 **/.state/**
 **/.downloaded/**
 **/.final/**
+
+# Logs
+logs/
