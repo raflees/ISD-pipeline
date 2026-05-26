@@ -52,6 +52,7 @@ coverage.xml
 docs/_build/
 
 # Pyenv
+.venv/
 *.python-version
 
 # Temp files

@@ -5,7 +5,7 @@ triggers:
     tag: latest
     envs:
       FILE_PATTERN: "A(.*).gz"
-ingest:
+ingests:
   - image: isd-ingest
     tag: latest
     envs:
